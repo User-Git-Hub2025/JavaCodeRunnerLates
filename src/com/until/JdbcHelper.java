@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class JdbcHelper {
 
-    private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
+    private static final String DRIVER = "com.mysql.jdbc.Driver";
 
     private static final String url =
             "jdbc:mysql://localhost:3306/db1"          // 3306 端口，db1 数据库
