@@ -25,7 +25,6 @@ public class JdbcHelper {
         }
     }
 
-
     private JdbcHelper() {}
 
     /** 获取连接，失败统一抛 DataAccessException */
@@ -36,7 +35,8 @@ public class JdbcHelper {
             throw new DataAccessException("获取数据库连接失败", e);
         }
     }
-    // ==================== 2. 统一异常 ====================
+
+    // ==================== 统一异常 ====================
 
     public static class DataAccessException extends RuntimeException {
         public DataAccessException(String message, Throwable cause) {
@@ -44,21 +44,34 @@ public class JdbcHelper {
         }
     }
 
+    // ==================== 增删改 ====================
 
-    // ---------- 增删改：只传 SQL，直接执行 ----------
-    public static int update(String sql) {
+    /**
+     * 执行增删改操作
+     * @param sql 带有占位符 ? 的 SQL 语句
+     * @param params 可变参数，按顺序传入 SQL 中 ? 对应的值
+     * @return 受影响的行数
+     */
+    public static int update(String sql, Object... params) {
         if (sql == null || sql.trim().isEmpty()) {
             throw new IllegalArgumentException("SQL 不能为空");
         }
+        // 使用 try-with-resources 自动关闭连接和 PreparedStatement
         try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement()) {
-            return stmt.executeUpdate(sql);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            // 如果有参数，则循环将参数赋值给 SQL 中的 ?
+            if (params != null && params.length > 0) {
+                for (int i = 0; i < params.length; i++) {
+                    // 注意：JDBC 的参数索引是从 1 开始的，所以这里是 i + 1
+                    pstmt.setObject(i + 1, params[i]);
+                }
+            }
+            // 执行更新并返回受影响的行数
+            return pstmt.executeUpdate();
+
         } catch (SQLException e) {
             throw new DataAccessException("执行更新失败: " + sql, e);
         }
     }
-
-
-
-
 }
