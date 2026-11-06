@@ -46,5 +46,7 @@ public class test3 {
         } else {
             System.out.println("商品添加失败");
         }
+
+        //测试是否符合预定要求
     }
 }
