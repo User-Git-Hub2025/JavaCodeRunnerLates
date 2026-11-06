@@ -7,7 +7,7 @@ public class JdbcHelper {
     private static final String DRIVER = "com.mysql.jdbc.Driver";
 
     private static final String url =
-            "jdbc:mysql://localhost:3306/db1"          // 3306 端口，db1 数据库
+            "jdbc:mysql://localhost:3306/db01"          // 3306 端口，db1 数据库
                     + "?useSSL=false"                          // 练习关闭 SSL，避免握手问题
                     + "&serverTimezone=Asia/Shanghai"          // 指定时区，避免时区错误
                     + "&characterEncoding=utf8"                // 防止中文乱码
