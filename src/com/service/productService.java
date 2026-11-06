@@ -3,6 +3,8 @@ package com.service;
 import com.dao.productDAO;
 import com.entity.Product;
 
+
+
 public class productService {
     public static boolean addProduct(Product product) {
         if (product == null) {
@@ -15,7 +17,7 @@ public class productService {
             throw new IllegalArgumentException("商品价格不能为负数");
         }
         if (product.getStock() < 0) {
-            throw new IllegalArgumentException("商品库存不能为负数");
+            throw new IllegalArgumentException(" 商品库存不能为负数");
         }
         return productDAO.addProduct(product) > 0;
     }
