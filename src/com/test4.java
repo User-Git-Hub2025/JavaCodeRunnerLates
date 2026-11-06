@@ -10,10 +10,11 @@ public class test4 {
 
         try {
             while (rs.next()) {
-                String id = rs.getString();
-                String name = rs.getString();
-                String pwd = rs.getString();
-                String address = rs.getString();
+                String id = rs.getString("id");
+                String name = rs.getString("name");
+                String pwd = rs.getString("password");
+                String address = rs.getString("address");
+                System.out.println("id=" + id + "\t名字：" + name + "\t");
 
             }
         }
