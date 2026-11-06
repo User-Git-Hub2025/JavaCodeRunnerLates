@@ -21,4 +21,7 @@ public class productService {
         }
         return productDAO.addProduct(product) > 0;
     }
+
+
+
 }
