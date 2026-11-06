@@ -12,10 +12,6 @@ public class test1 {
     public static void main(String[] args) {
         String name, pwd, address;
         System.out.println("请输入添加记录的: 用户名，密码， 地址");
-
-
-
-
         Scanner scanner = new Scanner(System.in);
         name = scanner.next();
         pwd = scanner.next();

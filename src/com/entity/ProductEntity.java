@@ -1,18 +1,19 @@
 package com.entity;
 
-public class Product {
+public class ProductEntity {
     private int pid;
-    private String pname;
+    private String name;
     private double price;
     private int stock;
 
-    public Product() {
-    }
-
-    public Product(String pname, double price, int stock) {
-        this.pname = pname;
+    public ProductEntity(String name, double price, int stock) {
+        this.name = name;
         this.price = price;
         this.stock = stock;
+    }
+
+    public ProductEntity() {
+
     }
 
     public int getPid() {
@@ -24,11 +25,11 @@ public class Product {
     }
 
     public String getPname() {
-        return pname;
+        return name;
     }
 
     public void setPname(String pname) {
-        this.pname = pname;
+        this.name = pname;
     }
 
     public double getPrice() {

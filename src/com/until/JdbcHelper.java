@@ -74,5 +74,20 @@ public class JdbcHelper {
             throw new DataAccessException("执行更新失败: " + sql, e);
         }
     }
+
+    public static ResultSet getResultSet(String sql) {
+        if (sql == null || sql.trim().isEmpty()) {
+            throw new IllegalArgumentException("SQL不能为空");
+        }
+
+        try {
+            Connection conn = getConnection();
+            Statement stmt = conn.createStatement();
+
+            return stmt.executeQuery(sql);
+        } catch (SQLException e) {
+            throw new DataAccessException("执行更新失败：" + sql, e);
+        }
+    }
 }
 
