@@ -78,6 +78,8 @@ class ProductPanel extends JPanel {
     }
 
 
+
+
         /**
          * 添加功能（弹窗）
          */
