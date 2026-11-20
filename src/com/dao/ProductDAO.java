@@ -10,7 +10,7 @@ public interface ProductDAO {
     int insert(ProductEntity product);
 
     //删除商品
-//    boolean deleteById(int pid);
+    boolean deleteById(int pid);
 
     //更新产品信息
 //    boolean update(ProductEntity product);
