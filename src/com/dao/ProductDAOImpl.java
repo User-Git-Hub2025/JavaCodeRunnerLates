@@ -9,6 +9,18 @@ import java.util.List;
 
 public class ProductDAOImpl implements ProductDAO {
 
+    //编辑商品
+    public boolean update(ProductEntity model) {
+        String sql = "update tb_product set pname = '" + model.getPname() + "', price = " + model.getPrice() + ", stock = " + model.getStock() + " where pid = " + model.getPid() + "";
+        boolean flag = false;
+        int num = JdbcHelper.update(sql);
+
+        if (num > 0) {
+            flag = true;
+        }
+        return flag;
+    }
+
     //删除商品
     @Override
     public boolean deleteById(int pid) {

@@ -117,4 +117,30 @@ class ProductPanel extends JPanel {
                 }
             }
     }
+
+    /**
+     * 删除功能
+     */
+    private void deleteSelected() {
+        int row = table.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "请先在表格中选中要删除的商品！");
+            return;
+        }
+
+        int pid = Integer.parseInt(table.getValueAt(row, 0).toString());
+        String pname = table.getValueAt(row, 1).toString();
+
+        int confirm = JOptionPane.showConfirmDialog(this, "确定要删除商品【" + pname + "】吗？", "删除确认", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            boolean success = productService.deleteById(pid);
+            if (success) {
+                JOptionPane.showMessageDialog(this, "删除成功！");
+                loadData(); // 重新加载
+            } else {
+                JOptionPane.showMessageDialog(this, "删除失败，请检查！");
+            }
+        }
+    }
+
 }

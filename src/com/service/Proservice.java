@@ -11,4 +11,5 @@ public interface Proservice {
 
     //添加商品
     boolean addProduct(ProductEntity product);
+    boolean deleteById(int pid);
 }
