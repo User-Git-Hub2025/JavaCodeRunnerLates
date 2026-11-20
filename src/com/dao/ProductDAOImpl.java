@@ -8,6 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDAOImpl implements ProductDAO {
+
+    //删除商品
+    @Override
+    public boolean deleteById(int pid) {
+        boolean flag = false;
+        String sql = "delete from tb_product where pid = " + pid + "";
+
+        int num = JdbcHelper.update(sql);
+        if (num > 0) {
+            flag = true;
+        }
+        return flag;
+    }
     @Override
     public int insert(ProductEntity product) {
             String sql = "insert into tb_product (pname, price, stock) values ('" + product.getPname() + "', " + product.getPrice() + ", " + product.getStock() + ")";
