@@ -36,9 +36,9 @@ class ProductPanel extends JPanel {
 
         // 绑定按钮事件
         refreshBtn.addActionListener(e -> loadData());
-       // addBtn.addActionListener(e -> showAddDialog());
-     //   editBtn.addActionListener(e -> showEditDialog());
-     //  deleteBtn.addActionListener(e -> deleteSelected());
+        addBtn.addActionListener(e -> showAddDialog());
+        editBtn.addActionListener(e -> showEditDialog());
+        deleteBtn.addActionListener(e -> deleteSelected());
 
         // 把按钮加进工具栏
         topPanel.add(refreshBtn);
@@ -77,45 +77,42 @@ class ProductPanel extends JPanel {
         countLabel.setText("（共 " + list.size() + " 条）");
     }
 
+    /**
+     * 添加功能（弹窗）
+     */
+    private void showAddDialog() {
+        JTextField nameField = new JTextField();
+        JTextField priceField = new JTextField();
+        JTextField stockField = new JTextField();
 
+        JPanel inputPanel = new JPanel(new GridLayout(3, 2, 5, 5));
+        inputPanel.add(new JLabel("商品名称："));
+        inputPanel.add(nameField);
+        inputPanel.add(new JLabel("单价："));
+        inputPanel.add(priceField);
+        inputPanel.add(new JLabel("库存："));
+        inputPanel.add(stockField);
 
+        int result = JOptionPane.showConfirmDialog(this, inputPanel, "添加商品", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
-        /**
-         * 添加功能（弹窗）
-         */
-        private void showAddDialog() {
-            JTextField nameField = new JTextField();
-            JTextField priceField = new JTextField();
-            JTextField stockField = new JTextField();
+        if (result == JOptionPane.OK_OPTION) {
+            try {
+                ProductEntity p = new ProductEntity();
+                p.setPname(nameField.getText().trim());
+                p.setPrice(Double.parseDouble(priceField.getText().trim()));
+                p.setStock(Integer.parseInt(stockField.getText().trim()));
 
-            JPanel inputPanel = new JPanel(new GridLayout(3, 2, 5, 5));
-            inputPanel.add(new JLabel("商品名称："));
-            inputPanel.add(nameField);
-            inputPanel.add(new JLabel("单价："));
-            inputPanel.add(priceField);
-            inputPanel.add(new JLabel("库存："));
-            inputPanel.add(stockField);
-
-            int result = JOptionPane.showConfirmDialog(this, inputPanel, "添加商品", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-            if (result == JOptionPane.OK_OPTION) {
-                try {
-                    ProductEntity p = new ProductEntity();
-                    p.setPname(nameField.getText().trim());
-                    p.setPrice(Double.parseDouble(priceField.getText().trim()));
-                    p.setStock(Integer.parseInt(stockField.getText().trim()));
-
-                    boolean success = productService.addProduct(p);
-                    if (success) {
-                        JOptionPane.showMessageDialog(this, "添加成功！");
-                        loadData();
-                    } else {
-                        JOptionPane.showMessageDialog(this, "添加失败！可能商品名称为空或价格为负。");
-                    }
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(this, "单价和库存必须输入数字！", "格式错误", JOptionPane.ERROR_MESSAGE);
+                boolean success = productService.addProduct(p);
+                if (success) {
+                    JOptionPane.showMessageDialog(this, "添加成功！");
+                    loadData();
+                } else {
+                    JOptionPane.showMessageDialog(this, "添加失败！可能商品名称为空或价格为负。");
                 }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "单价和库存必须输入数字！", "格式错误", JOptionPane.ERROR_MESSAGE);
             }
+        }
     }
 
     /**
@@ -142,5 +139,55 @@ class ProductPanel extends JPanel {
             }
         }
     }
+    /**
+     * 编辑功能（弹窗）
+     */
+    private void showEditDialog() {
+        int row = table.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "请先在表格中选中要编辑的商品！");
+            return;
+        }
 
+        // 获取当前行数据
+        int pid = Integer.parseInt(table.getValueAt(row, 0).toString());
+        String pname = table.getValueAt(row, 1).toString();
+        double price = Double.parseDouble(table.getValueAt(row, 2).toString());
+        int stock = Integer.parseInt(table.getValueAt(row, 3).toString());
+
+        // 创建弹窗输入组件
+        JTextField nameField = new JTextField(pname);
+        JTextField priceField = new JTextField(String.valueOf(price));
+        JTextField stockField = new JTextField(String.valueOf(stock));
+
+        JPanel inputPanel = new JPanel(new GridLayout(3, 2, 5, 5));
+        inputPanel.add(new JLabel("商品名称："));
+        inputPanel.add(nameField);
+        inputPanel.add(new JLabel("单价："));
+        inputPanel.add(priceField);
+        inputPanel.add(new JLabel("库存："));
+        inputPanel.add(stockField);
+
+        int result = JOptionPane.showConfirmDialog(this, inputPanel, "编辑商品", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        if (result == JOptionPane.OK_OPTION) {
+            try {
+                ProductEntity p = new ProductEntity();
+                p.setPid(pid);
+                p.setPname(nameField.getText().trim());
+                p.setPrice(Double.parseDouble(priceField.getText().trim()));
+                p.setStock(Integer.parseInt(stockField.getText().trim()));
+
+                boolean success = productService.updateProduct(p);
+                if (success) {
+                    JOptionPane.showMessageDialog(this, "修改成功！");
+                    loadData();
+                } else {
+                    JOptionPane.showMessageDialog(this, "修改失败！");
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "单价和库存必须输入数字！", "格式错误", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
 }

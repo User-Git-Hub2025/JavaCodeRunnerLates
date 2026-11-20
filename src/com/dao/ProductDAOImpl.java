@@ -10,6 +10,7 @@ import java.util.List;
 public class ProductDAOImpl implements ProductDAO {
 
     //编辑商品
+    @Override
     public boolean update(ProductEntity model) {
         String sql = "update tb_product set pname = '" + model.getPname() + "', price = " + model.getPrice() + ", stock = " + model.getStock() + " where pid = " + model.getPid() + "";
         boolean flag = false;

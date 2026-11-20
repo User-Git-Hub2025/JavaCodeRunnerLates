@@ -10,11 +10,33 @@ public class ProserviceImpl implements Proservice {
     private final ProductDAO pdao = new ProductDAOImpl();
 
     //删除
+    @Override
     public boolean deleteById(int pid) {
         if (pid < 0) {
             return false;
         }
         return pdao.deleteById(pid);
+    }
+
+    //编辑
+    @Override
+    public boolean updateProduct(ProductEntity product) {
+        if (product == null || product.getPname() == null || product.getPname().isEmpty()) {
+            System.err.println("业务校检失败：商品名称不能为空");
+            return false;
+        }
+
+        if (product.getPrice() < 0) {
+            System.err.println("业务校检失败：商品单价不能为负数");
+            return false;
+        }
+
+        if (product.getStock() < 0) {
+            System.err.println("业务校检失败：商品库存不能为负数");
+            return false;
+        }
+
+        return pdao.update(product);
     }
 
     @Override

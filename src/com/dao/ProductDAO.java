@@ -13,7 +13,7 @@ public interface ProductDAO {
     boolean deleteById(int pid);
 
     //更新产品信息
-//    boolean update(ProductEntity product);
+    boolean update(ProductEntity product);
 
     //查找所有的商品
     List<ProductEntity> findALL();
