@@ -9,6 +9,14 @@ import java.util.List;
 public class ProserviceImpl implements Proservice {
     private final ProductDAO pdao = new ProductDAOImpl();
 
+    //删除
+    public boolean deleteById(int pid) {
+        if (pid < 0) {
+            return false;
+        }
+        return pdao.deleteById(pid);
+    }
+
     @Override
     public boolean addProduct(ProductEntity product) {
         if (product == null || product.getPname() == null || product.getPname().isEmpty()) {
