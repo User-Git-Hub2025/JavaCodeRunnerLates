@@ -77,6 +77,7 @@ class ProductPanel extends JPanel {
         countLabel.setText("（共 " + list.size() + " 条）");
     }
 
+
         /**
          * 添加功能（弹窗）
          */
