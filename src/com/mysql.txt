@@ -1,0 +1,36 @@
+创建数据库db1
+
+CREATE DATABASE IF NOT EXISTS db1
+  DEFAULT CHARACTER SET utf8mb4
+  DEFAULT COLLATE utf8mb4_unicode_ci;
+
+USE db1;
+CREATE TABLE IF NOT EXISTS tb_user (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(50) NOT NULL,
+   password VARCHAR(255),
+  address VARCHAR(255)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+set names gbk;
+
+
+创建商品信息表：tb_product  : pid, pname,price ,stock
+
+在三层架构中，实现添加商品
+
+
+
+命令：  select * from tb_user
+
+执行命令： 得到一个结果
+
+create table  if not exists tb_product(
+ pid int primary key auto_increment,
+ pname varchar(255),
+ price double,
+stock int(10)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
